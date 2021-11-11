@@ -13,19 +13,22 @@ import {
   Text,
   Box,
 } from "@chakra-ui/react";
-import daoList from "../dao.json";
-export default function Home() {
+
+import parser from "@/utils/parser";
+
+export default function Home(props) {
   return (
     <>
       <Nav />
       <Page>
         <SimpleGrid mt={10} columns={4} spacing="40px">
-          <Box
-            h={"192px"}
-            borderWidth="1px"
-            borderRadius="lg"
-            spacing={4}
-          ></Box>
+          <Box h={"192px"} borderWidth="1px" borderRadius="lg" p={6}>
+            <Stat>
+              <StatLabel>Number of votes</StatLabel>
+              <StatNumber>{props.gov.count}</StatNumber>
+              <StatHelpText></StatHelpText>
+            </Stat>
+          </Box>
         </SimpleGrid>
       </Page>
     </>
@@ -33,12 +36,8 @@ export default function Home() {
 }
 
 export async function getServerSideProps() {
-  let dao = Object.keys(daoList)[0];
-  console.log(dao);
   const gov = await fetch(
-    "https://api.covalenthq.com/v1/1/events/address/0xc0Da02939E1441F497fd74F78cE7Decb17B66529/?starting-block=12115107&ending-block=12240004&key=ckey_5de627364f574dde947de753b67"
-  );
-  const res = await gov.json().then((r) => r.data);
-  console.log(res);
-  return { props: {} };
+    "https://polydao-api.vercel.app/dao/compound/governance/votes"
+  ).then((r) => parser(r));
+  return { props: { gov } };
 }
