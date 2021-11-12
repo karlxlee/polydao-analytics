@@ -20,6 +20,12 @@ import dynamic from "next/dynamic";
 const LineChart = dynamic(() => import("@/components/LineChart"), {
   ssr: false,
 });
+const Treemap = dynamic(() => import("@/components/Treemap"), {
+  ssr: false,
+});
+const Bar = dynamic(() => import("@/components/Bar"), {
+  ssr: false,
+});
 
 export default function Home(props) {
   return (
@@ -64,6 +70,27 @@ export default function Home(props) {
               <LineChart data={props.holdings} />
             </Box>
           </GridItem>
+          <GridItem
+            colSpan={3}
+            h={"440px"}
+            borderWidth="1px"
+            borderRadius="lg"
+            p={6}
+          >
+            {" "}
+            <Stat>
+              <StatLabel>Token concentration</StatLabel>
+              <StatHelpText>
+                The number of tokens held by the top 20 addresses
+              </StatHelpText>
+            </Stat>
+            <Box>
+              <Bar
+                data={props.concentration.data}
+                categories={props.concentration.categories}
+              />
+            </Box>
+          </GridItem>
         </Grid>
       </Page>
     </>
@@ -75,9 +102,35 @@ export async function getServerSideProps() {
     "https://polydao-api.vercel.app/dao/compound/governance/votes"
   ).then((r) => parser(r));
   const holdings = await fetch(
-    "https://polydao-api.vercel.app/dao/compound/governance/holdings"
+    "https://polydao-api.vercel.app/dao/compound/governance/token/holdings"
   )
     .then((r) => parser(r))
     .then((r) => r.holdings);
-  return { props: { gov, holdings } };
+  const concentrationRes = await fetch(
+    "https://polydao-api.vercel.app/dao/compound/governance/token/concentration"
+  )
+    .then((r) => parser(r))
+    .then((r) => r.concentration);
+  const concentration = {
+    data: concentrationRes
+      .map(function (i) {
+        return i[1];
+      })
+      .slice(0, 20),
+
+    categories: concentrationRes
+      .map(function (i) {
+        return i[0];
+      })
+      .slice(0, 20),
+  };
+  // .then((r) =>
+  //   r
+  //     .map(function (i) {
+  //       return { x: i[0], y: i[1] };
+  //     })
+  //     .slice(0, 20)
+  // );
+  console.log(concentration);
+  return { props: { gov, holdings, concentration } };
 }

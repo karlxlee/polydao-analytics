@@ -73,7 +73,9 @@ export async function getServerSideProps({ params }) {
     "https://polydao-api.vercel.app/dao/" + params.dao + "/governance/votes"
   ).then((r) => parser(r));
   const holdings = await fetch(
-    "https://polydao-api.vercel.app/dao/" + params.dao + "/governance/holdings"
+    "https://polydao-api.vercel.app/dao/" +
+      params.dao +
+      "/governance/token/holdings"
   )
     .then((r) => parser(r))
     .then((r) => r.holdings);
