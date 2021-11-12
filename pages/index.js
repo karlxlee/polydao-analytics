@@ -2,6 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Page from "@/components/Page";
 import Nav from "@/components/Nav";
+
 import {
   Stat,
   StatLabel,
@@ -14,6 +15,8 @@ import {
   Text,
   Box,
 } from "@chakra-ui/react";
+
+import StatCard from "@/components/StatCard";
 import parser from "@/utils/parser";
 import dynamic from "next/dynamic";
 
@@ -39,19 +42,16 @@ export default function Home(props) {
           templateColumns="repeat(5, 1fr)"
           gap={4}
         >
-          <GridItem
-            colSpan={1}
-            h={"192px"}
-            borderWidth="1px"
-            borderRadius="lg"
-            p={6}
-          >
-            <Stat>
-              <StatLabel>Number of votes</StatLabel>
-              <StatNumber>{props.gov.count}</StatNumber>
-              <StatHelpText></StatHelpText>
-            </Stat>
-          </GridItem>
+          <StatCard
+            label="Number of votes"
+            stat={props.gov.count}
+            description={""}
+          />
+          <StatCard
+            label="Holdings"
+            stat={"$" + props.holdings[0][1]}
+            description={""}
+          />
           <GridItem
             colSpan={3}
             h={"440px"}
