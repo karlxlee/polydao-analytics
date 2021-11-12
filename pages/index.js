@@ -56,6 +56,9 @@ export default function Home(props) {
             {" "}
             <Stat>
               <StatLabel>Holdings (in USD)</StatLabel>
+              <StatHelpText>
+                The value of the governance tokens held in the DAO reserve
+              </StatHelpText>
             </Stat>
             <Box>
               <LineChart data={props.holdings} />
