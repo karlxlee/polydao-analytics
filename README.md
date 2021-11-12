@@ -6,7 +6,7 @@ Browse key metrics from DAOs and easily add new ones.
 
 Polydao Analytics relies on:
 
-- [polydao-api](https://github.com/karlxlee/polydao-api), an API wrapper that consumes data from the [Covalent] API(https://www.covalenthq.com/)
+- [polydao-api](https://github.com/karlxlee/polydao-api), an API wrapper that consumes data from the [Covalent API](https://www.covalenthq.com/)
 - [Next.js](https://nextjs.org) and [Chakra UI](https://chakra-ui.com/) for the front-end
 - [ApexCharts](https://apexcharts.com/) package
 
