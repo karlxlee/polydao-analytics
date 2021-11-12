@@ -10,6 +10,15 @@ Polydao Analytics relies on:
 - [Next.js](https://nextjs.org) and [Chakra UI](https://chakra-ui.com/) for the front-end
 - [ApexCharts](https://apexcharts.com/) package
 
+### Metrics
+
+- Number of votes
+- DAO holdings
+- Top token holders
+- [wip] Number of members
+- [wip] Token concentration
+- [wip] Social media sentiment
+
 ## Getting Started
 
 First, run the development server:
