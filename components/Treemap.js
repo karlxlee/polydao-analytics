@@ -15,7 +15,10 @@ class ApexChart extends React.Component {
         type: "category",
       },
       theme: {
-        mode: "light",
+        mode: "dark",
+      },
+      tooltip: {
+        theme: "dark",
       },
       options: {
         legend: {

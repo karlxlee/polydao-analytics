@@ -14,8 +14,15 @@ class ApexChart extends React.Component {
       theme: {
         mode: "dark",
       },
+
       options: {
         chart: {
+          toolbar: {
+            show: true,
+            tools: {
+              download: false,
+            },
+          },
           height: 350,
           type: "bar",
           events: {
@@ -31,18 +38,29 @@ class ApexChart extends React.Component {
             distributed: true,
           },
         },
+        tooltip: {
+          theme: "dark",
+        },
         dataLabels: {
           enabled: false,
         },
         legend: {
           show: false,
         },
+        yaxis: {
+          labels: {
+            style: {
+              colors: "#ffffff",
+            },
+          },
+        },
         xaxis: {
           categories: props.categories,
           labels: {
             style: {
               // colors: colors,
-              fontSize: "12px",
+              colors: "#ffffff",
+              // fontSize: "12px",
             },
           },
         },

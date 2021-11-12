@@ -79,9 +79,9 @@ export default function Home(props) {
           >
             {" "}
             <Stat>
-              <StatLabel>Token concentration</StatLabel>
+              <StatLabel>Top token holders</StatLabel>
               <StatHelpText>
-                The number of tokens held by the top 20 addresses
+                The number of governance tokens held by the top 10 addresses
               </StatHelpText>
             </Stat>
             <Box>
@@ -116,21 +116,14 @@ export async function getServerSideProps() {
       .map(function (i) {
         return i[1];
       })
-      .slice(0, 20),
+      .slice(0, 10),
 
     categories: concentrationRes
       .map(function (i) {
         return i[0];
       })
-      .slice(0, 20),
+      .slice(0, 10),
   };
-  // .then((r) =>
-  //   r
-  //     .map(function (i) {
-  //       return { x: i[0], y: i[1] };
-  //     })
-  //     .slice(0, 20)
-  // );
   console.log(concentration);
   return { props: { gov, holdings, concentration } };
 }
