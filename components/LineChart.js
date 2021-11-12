@@ -4,6 +4,7 @@ import Chart from "react-apexcharts";
 class ApexChart extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props.data);
     this.state = {
       series: [
         {
@@ -18,7 +19,9 @@ class ApexChart extends React.Component {
           zoom: {
             autoScaleYaxis: true,
           },
+          background: "#66000000",
         },
+
         dataLabels: {
           enabled: false,
         },
@@ -28,26 +31,40 @@ class ApexChart extends React.Component {
         },
         xaxis: {
           type: "datetime",
-          min: props.minDate,
+          // min: props.minDate,
           tickAmount: 6,
+          labels: {
+            style: {
+              colors: "#ffffff",
+            },
+          },
+        },
+        yaxis: {
+          labels: {
+            style: {
+              colors: "#ffffff",
+            },
+          },
         },
         tooltip: {
           x: {
             format: "dd MMM yyyy",
           },
+          // theme: "dark",
         },
-        fill: {
-          type: "gradient",
-          gradient: {
-            shadeIntensity: 1,
-            opacityFrom: 0.7,
-            opacityTo: 0.9,
-            stops: [0, 100],
-          },
+        theme: {
+          mode: "dark",
         },
+        // fill: {
+        //   type: "gradient",
+        //   gradient: {
+        //     shadeIntensity: 1,
+        //     opacityFrom: 0.7,
+        //     opacityTo: 0.9,
+        //     stops: [0, 100],
+        //   },
+        // },
       },
-
-      selection: "one_year",
     };
   }
 
