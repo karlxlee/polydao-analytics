@@ -1,5 +1,3 @@
-import Head from "next/head";
-import Image from "next/image";
 import Page from "@/components/Page";
 import Nav from "@/components/Nav";
 import {
@@ -21,10 +19,10 @@ const LineChart = dynamic(() => import("@/components/LineChart"), {
   ssr: false,
 });
 
-export default function Home(props) {
+export default function Dao(props) {
   return (
     <>
-      <Nav page={"compound"} />
+      <Nav page={props.dao} />
       <Page>
         <Grid
           mt={10}
@@ -70,14 +68,14 @@ export default function Home(props) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ params }) {
   const gov = await fetch(
-    "https://polydao-api.vercel.app/dao/compound/governance/votes"
+    "https://polydao-api.vercel.app/dao/" + params.dao + "/governance/votes"
   ).then((r) => parser(r));
   const holdings = await fetch(
-    "https://polydao-api.vercel.app/dao/compound/governance/holdings"
+    "https://polydao-api.vercel.app/dao/" + params.dao + "/governance/holdings"
   )
     .then((r) => parser(r))
     .then((r) => r.holdings);
-  return { props: { gov, holdings } };
+  return { props: { gov, holdings, dao: params.dao } };
 }

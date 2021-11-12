@@ -1,12 +1,21 @@
-import React from "react";
+import Link from "next/link";
+import { useState } from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
-const Nav = () => {
+const Nav = (props) => {
+  const mapping = {
+    compound: 0,
+    uniswap: 1,
+  };
+
   return (
-    <Tabs align="center">
+    <Tabs defaultIndex={mapping[props.page]} align="center">
       <TabList>
-        <Tab>Compound</Tab>
-        <Tab>Aave</Tab>
-        <Tab>Maker</Tab>
+        <Tab>
+          <Link href="/">Compound</Link>
+        </Tab>
+        <Tab>
+          <Link href="/uniswap">Uniswap</Link>
+        </Tab>
       </TabList>
     </Tabs>
   );
