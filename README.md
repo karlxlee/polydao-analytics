@@ -15,8 +15,8 @@ Polydao Analytics relies on:
 - Number of votes
 - DAO holdings
 - Top token holders
+- Token concentration
 - [wip] Number of members
-- [wip] Token concentration
 - [wip] Social media sentiment
 
 ## Getting Started

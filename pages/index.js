@@ -103,9 +103,9 @@ export default function Home(props) {
           >
             {" "}
             <Stat>
-              <StatLabel>Top token holders</StatLabel>
+              <StatLabel>Token distribution</StatLabel>
               <StatHelpText>
-                The number of governance tokens held by the top 10 addresses
+                The distribution of governance tokens across all holders
               </StatHelpText>
             </Stat>
             <Box>
