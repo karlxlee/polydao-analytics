@@ -29,6 +29,9 @@ const Treemap = dynamic(() => import("@/components/Treemap"), {
 const Bar = dynamic(() => import("@/components/Bar"), {
   ssr: false,
 });
+const DonutChart = dynamic(() => import("@/components/DonutChart"), {
+  ssr: false,
+});
 
 export default function Home(props) {
   return (
@@ -86,8 +89,29 @@ export default function Home(props) {
             </Stat>
             <Box>
               <Bar
+                data={props.concentration.data.slice(0, 10)}
+                categories={props.concentration.categories.slice(0, 10)}
+              />
+            </Box>
+          </GridItem>{" "}
+          <GridItem
+            colSpan={3}
+            h={"540px"}
+            borderWidth="1px"
+            borderRadius="lg"
+            p={6}
+          >
+            {" "}
+            <Stat>
+              <StatLabel>Top token holders</StatLabel>
+              <StatHelpText>
+                The number of governance tokens held by the top 10 addresses
+              </StatHelpText>
+            </Stat>
+            <Box>
+              <DonutChart
                 data={props.concentration.data}
-                categories={props.concentration.categories}
+                labels={props.concentration.categories}
               />
             </Box>
           </GridItem>
@@ -112,18 +136,16 @@ export async function getServerSideProps() {
     .then((r) => parser(r))
     .then((r) => r.concentration);
   const concentration = {
-    data: concentrationRes
-      .map(function (i) {
-        return i[1];
-      })
-      .slice(0, 10),
+    data: concentrationRes.map(function (i) {
+      return i[1];
+    }),
 
-    categories: concentrationRes
-      .map(function (i) {
-        return i[0];
-      })
-      .slice(0, 10),
+    categories: concentrationRes.map(function (i) {
+      return i[0];
+    }),
   };
   console.log(concentration);
+  console.log(gov);
+  console.log(holdings);
   return { props: { gov, holdings, concentration } };
 }
