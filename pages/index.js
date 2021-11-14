@@ -23,7 +23,7 @@ import dynamic from "next/dynamic";
 const LineChart = dynamic(() => import("@/components/LineChart"), {
   ssr: false,
 });
-const Treemap = dynamic(() => import("@/components/Treemap"), {
+const SparkLineChart = dynamic(() => import("@/components/SparkLineChart"), {
   ssr: false,
 });
 const Bar = dynamic(() => import("@/components/Bar"), {
@@ -45,16 +45,26 @@ export default function Home(props) {
           templateColumns="repeat(5, 1fr)"
           gap={4}
         >
-          <StatCard
+          {/* <StatCard
             label="Number of votes"
             stat={props.gov.count}
             description={""}
-          />
-          <StatCard
-            label="Holdings"
-            stat={"$" + props.holdings[0][1]}
-            description={""}
-          />
+          /> */}
+          <GridItem
+            p={0}
+            colSpan={2}
+            h={"220px"}
+            borderWidth="1px"
+            borderRadius="lg"
+          >
+            <Stat p={6} pb={0}>
+              <StatLabel>Number of votes</StatLabel>
+              <StatHelpText></StatHelpText>
+            </Stat>
+            <Box>
+              <SparkLineChart data={props.votes} />
+            </Box>
+          </GridItem>
           <GridItem
             colSpan={3}
             h={"440px"}
@@ -73,6 +83,11 @@ export default function Home(props) {
               <LineChart data={props.holdings} />
             </Box>
           </GridItem>
+          <StatCard
+            label="Holdings"
+            stat={"$" + props.holdings[0][1]}
+            description={""}
+          />
           <GridItem
             colSpan={3}
             h={"440px"}
@@ -122,9 +137,11 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps() {
-  const gov = await fetch(
+  const votes = await fetch(
     "https://polydao-api.vercel.app/dao/compound/governance/votes"
-  ).then((r) => parser(r));
+  )
+    .then((r) => parser(r))
+    .then((r) => r.votes);
   const holdings = await fetch(
     "https://polydao-api.vercel.app/dao/compound/governance/token/holdings"
   )
@@ -144,8 +161,6 @@ export async function getServerSideProps() {
       return i[0];
     }),
   };
-  console.log(concentration);
-  console.log(gov);
-  console.log(holdings);
-  return { props: { gov, holdings, concentration } };
+  console.log(votes);
+  return { props: { votes, holdings, concentration } };
 }
