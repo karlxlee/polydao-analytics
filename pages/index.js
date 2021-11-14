@@ -50,7 +50,7 @@ export default function Home(props) {
             rowStart={1}
             colStart={1}
             rowSpan={1}
-            colSpan={2}
+            colSpan={{ sm: 5, md: 5, lg: 2 }}
             h={"220px"}
             borderWidth="1px"
             borderRadius="lg"
@@ -67,7 +67,7 @@ export default function Home(props) {
             p={0}
             // colStart={1}
             rowStart={2}
-            colSpan={2}
+            colSpan={{ sm: 5, md: 5, lg: 2 }}
             h={"220px"}
             borderWidth="1px"
             borderRadius="lg"
@@ -83,9 +83,10 @@ export default function Home(props) {
             </Box>
           </GridItem>
           <GridItem
-            colSpan={3}
-            colStart={3}
+            colSpan={{ sm: 5, lg: 3 }}
+            colStart={{ sm: 1, lg: 3 }}
             rowSpan={2}
+            h={{ sm: "500px", lg: "auto" }}
             borderWidth="1px"
             borderRadius="lg"
             p={6}
@@ -101,11 +102,6 @@ export default function Home(props) {
               <LineChart data={props.holdings} />
             </Box>
           </GridItem>
-          {/* <StatCard
-            label="Holdings"
-            stat={"$" + props.holdings[0][1]}
-            description={""}
-          /> */}
           <GridItem
             colSpan={3}
             h={"440px"}
