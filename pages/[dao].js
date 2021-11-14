@@ -18,6 +18,9 @@ import dynamic from "next/dynamic";
 const LineChart = dynamic(() => import("@/components/LineChart"), {
   ssr: false,
 });
+const SparkLineChart = dynamic(() => import("@/components/SparkLineChart"), {
+  ssr: false,
+});
 
 export default function Dao(props) {
   return (
@@ -32,17 +35,19 @@ export default function Dao(props) {
           gap={4}
         >
           <GridItem
-            colSpan={1}
-            h={"192px"}
+            p={0}
+            colSpan={2}
+            h={"220px"}
             borderWidth="1px"
             borderRadius="lg"
-            p={6}
           >
-            <Stat>
+            <Stat p={6} pb={0}>
               <StatLabel>Number of votes</StatLabel>
-              <StatNumber>{props.gov.count}</StatNumber>
-              <StatHelpText></StatHelpText>
+              <StatHelpText>The number of votes cast each day</StatHelpText>
             </Stat>
+            <Box>
+              <SparkLineChart data={props.votes} />
+            </Box>
           </GridItem>
           <GridItem
             colSpan={3}
@@ -69,9 +74,11 @@ export default function Dao(props) {
 }
 
 export async function getServerSideProps({ params }) {
-  const gov = await fetch(
+  const votes = await fetch(
     "https://polydao-api.vercel.app/dao/" + params.dao + "/governance/votes"
-  ).then((r) => parser(r));
+  )
+    .then((r) => parser(r))
+    .then((r) => r.count);
   const holdings = await fetch(
     "https://polydao-api.vercel.app/dao/" +
       params.dao +
@@ -79,5 +86,5 @@ export async function getServerSideProps({ params }) {
   )
     .then((r) => parser(r))
     .then((r) => r.holdings);
-  return { props: { gov, holdings, dao: params.dao } };
+  return { props: { votes, holdings, dao: params.dao } };
 }

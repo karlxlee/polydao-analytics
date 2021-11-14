@@ -45,11 +45,6 @@ export default function Home(props) {
           templateColumns="repeat(5, 1fr)"
           gap={4}
         >
-          {/* <StatCard
-            label="Number of votes"
-            stat={props.gov.count}
-            description={""}
-          /> */}
           <GridItem
             p={0}
             colSpan={2}
@@ -59,7 +54,7 @@ export default function Home(props) {
           >
             <Stat p={6} pb={0}>
               <StatLabel>Number of votes</StatLabel>
-              <StatHelpText></StatHelpText>
+              <StatHelpText>The number of votes cast each day</StatHelpText>
             </Stat>
             <Box>
               <SparkLineChart data={props.votes} />
@@ -141,7 +136,7 @@ export async function getServerSideProps() {
     "https://polydao-api.vercel.app/dao/compound/governance/votes"
   )
     .then((r) => parser(r))
-    .then((r) => r.votes);
+    .then((r) => r.count);
   const holdings = await fetch(
     "https://polydao-api.vercel.app/dao/compound/governance/token/holdings"
   )
