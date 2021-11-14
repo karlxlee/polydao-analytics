@@ -41,12 +41,15 @@ export default function Home(props) {
         <Grid
           mt={10}
           h="200px"
-          templateRows="repeat(2, 1fr)"
+          templateRows="repeat(6, 1fr)"
           templateColumns="repeat(5, 1fr)"
           gap={4}
         >
           <GridItem
             p={0}
+            rowStart={1}
+            colStart={1}
+            rowSpan={1}
             colSpan={2}
             h={"220px"}
             borderWidth="1px"
@@ -61,8 +64,28 @@ export default function Home(props) {
             </Box>
           </GridItem>
           <GridItem
+            p={0}
+            // colStart={1}
+            rowStart={2}
+            colSpan={2}
+            h={"220px"}
+            borderWidth="1px"
+            borderRadius="lg"
+          >
+            <Stat p={6} pb={0}>
+              <StatLabel>Number of proposals</StatLabel>
+              <StatHelpText>
+                The number of proposals created each day
+              </StatHelpText>
+            </Stat>
+            <Box>
+              <SparkLineChart data={props.proposals} />
+            </Box>
+          </GridItem>
+          <GridItem
             colSpan={3}
-            h={"440px"}
+            colStart={3}
+            rowSpan={2}
             borderWidth="1px"
             borderRadius="lg"
             p={6}
@@ -78,11 +101,11 @@ export default function Home(props) {
               <LineChart data={props.holdings} />
             </Box>
           </GridItem>
-          <StatCard
+          {/* <StatCard
             label="Holdings"
             stat={"$" + props.holdings[0][1]}
             description={""}
-          />
+          /> */}
           <GridItem
             colSpan={3}
             h={"440px"}
@@ -137,6 +160,11 @@ export async function getServerSideProps() {
   )
     .then((r) => parser(r))
     .then((r) => r.count);
+  const proposals = await fetch(
+    "https://polydao-api.vercel.app/dao/compound/governance/proposals"
+  )
+    .then((r) => parser(r))
+    .then((r) => r.count);
   const holdings = await fetch(
     "https://polydao-api.vercel.app/dao/compound/governance/token/holdings"
   )
@@ -157,5 +185,5 @@ export async function getServerSideProps() {
     }),
   };
   console.log(votes);
-  return { props: { votes, holdings, concentration } };
+  return { props: { votes, proposals, holdings, concentration } };
 }
