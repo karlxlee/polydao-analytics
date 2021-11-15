@@ -124,8 +124,8 @@ export default function Home(props) {
             <Bar data={props.power.data} categories={props.power.categories} />
           </GridItem>
           <GridItem
-            colSpan={3}
-            h={"440px"}
+            colSpan={2}
+            h={"540px"}
             borderWidth="1px"
             borderRadius="lg"
             p={6}
