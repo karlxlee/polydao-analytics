@@ -32,6 +32,9 @@ const Bar = dynamic(() => import("@/components/Bar"), {
 const DonutChart = dynamic(() => import("@/components/DonutChart"), {
   ssr: false,
 });
+const Treemap = dynamic(() => import("@/components/Treemap"), {
+  ssr: false,
+});
 
 export default function Home(props) {
   return (
@@ -103,6 +106,24 @@ export default function Home(props) {
             </Box>
           </GridItem>
           <GridItem
+            p={6}
+            // colStart={1}
+            // rowStart={2}
+            colSpan={{ sm: 5, md: 5, lg: 5 }}
+            h={"440px"}
+            borderWidth="1px"
+            borderRadius="lg"
+          >
+            {" "}
+            <Stat>
+              <StatLabel>Voting power</StatLabel>
+              <StatHelpText>
+                The number of the votes delegated to and held by addresses
+              </StatHelpText>
+            </Stat>
+            <Bar data={props.power.data} categories={props.power.categories} />
+          </GridItem>
+          <GridItem
             colSpan={3}
             h={"440px"}
             borderWidth="1px"
@@ -156,6 +177,18 @@ export async function getServerSideProps() {
   )
     .then((r) => parser(r))
     .then((r) => r.count);
+
+  const powerRes = await fetch(
+    "https://polydao-api.vercel.app/dao/compound/governance/power"
+  )
+    .then((r) => parser(r))
+    .then((r) => r.power);
+
+  const power = {
+    data: powerRes.map((i) => i[2]),
+    categories: powerRes.map((i) => i[0]),
+  };
+
   const proposals = await fetch(
     "https://polydao-api.vercel.app/dao/compound/governance/proposals"
   )
@@ -180,6 +213,6 @@ export async function getServerSideProps() {
       return i[0];
     }),
   };
-  console.log(votes);
-  return { props: { votes, proposals, holdings, concentration } };
+  console.log(power);
+  return { props: { votes, power, proposals, holdings, concentration } };
 }

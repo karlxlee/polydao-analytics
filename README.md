@@ -2,6 +2,8 @@
 
 Browse key metrics from DAOs and easily add new ones.
 
+### Live Demo: https://polydao-analytics.vercel.app
+
 ## Implementation
 
 Polydao Analytics relies on:
@@ -16,6 +18,7 @@ Polydao Analytics relies on:
 - DAO holdings
 - Top token holders
 - Token concentration
+- Voting power
 - [wip] Number of members
 - [wip] Social media sentiment
 
