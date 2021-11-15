@@ -107,9 +107,7 @@ export default function Home(props) {
           </GridItem>
           <GridItem
             p={6}
-            // colStart={1}
-            // rowStart={2}
-            colSpan={{ sm: 5, md: 5, lg: 5 }}
+            colSpan={5}
             h={"440px"}
             borderWidth="1px"
             borderRadius="lg"
@@ -124,7 +122,7 @@ export default function Home(props) {
             <Bar data={props.power.data} categories={props.power.categories} />
           </GridItem>
           <GridItem
-            colSpan={2}
+            colSpan={{ sm: 5, lg: 2 }}
             h={"540px"}
             borderWidth="1px"
             borderRadius="lg"
@@ -145,7 +143,7 @@ export default function Home(props) {
             </Box>
           </GridItem>{" "}
           <GridItem
-            colSpan={3}
+            colSpan={{ sm: 5, lg: 3 }}
             h={"540px"}
             borderWidth="1px"
             borderRadius="lg"
