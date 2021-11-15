@@ -108,48 +108,52 @@ export default function Dao(props) {
             </Stat>
             <Bar data={props.power.data} categories={props.power.categories} />
           </GridItem>
-          {/* <GridItem
-            colSpan={{ sm: 5, lg: 2 }}
-            h={"540px"}
-            borderWidth="1px"
-            borderRadius="lg"
-            p={6}
-          >
-            {" "}
-            <Stat>
-              <StatLabel>Top token holders</StatLabel>
-              <StatHelpText>
-                The number of governance tokens held by the top 10 addresses
-              </StatHelpText>
-            </Stat>
-            <Box>
-              <Bar
-                data={props.concentration.data.slice(0, 10)}
-                categories={props.concentration.categories.slice(0, 10)}
-              />
-            </Box>
-          </GridItem>{" "}
-          <GridItem
-            colSpan={{ sm: 5, lg: 3 }}
-            h={"540px"}
-            borderWidth="1px"
-            borderRadius="lg"
-            p={6}
-          >
-            {" "}
-            <Stat>
-              <StatLabel>Token distribution</StatLabel>
-              <StatHelpText>
-                The distribution of governance tokens across all holders
-              </StatHelpText>
-            </Stat>
-            <Box>
-              <DonutChart
-                data={props.concentration.data}
-                labels={props.concentration.categories}
-              />
-            </Box>
-          </GridItem> */}
+          {props.concentration && (
+            <>
+              <GridItem
+                colSpan={{ sm: 5, lg: 2 }}
+                h={"540px"}
+                borderWidth="1px"
+                borderRadius="lg"
+                p={6}
+              >
+                {" "}
+                <Stat>
+                  <StatLabel>Top token holders</StatLabel>
+                  <StatHelpText>
+                    The number of governance tokens held by the top 10 addresses
+                  </StatHelpText>
+                </Stat>
+                <Box>
+                  <Bar
+                    data={props.concentration.data.slice(0, 10)}
+                    categories={props.concentration.categories.slice(0, 10)}
+                  />
+                </Box>
+              </GridItem>
+              <GridItem
+                colSpan={{ sm: 5, lg: 3 }}
+                h={"540px"}
+                borderWidth="1px"
+                borderRadius="lg"
+                p={6}
+              >
+                {" "}
+                <Stat>
+                  <StatLabel>Token distribution</StatLabel>
+                  <StatHelpText>
+                    The distribution of governance tokens across all holders
+                  </StatHelpText>
+                </Stat>
+                <Box>
+                  <DonutChart
+                    data={props.concentration.data}
+                    labels={props.concentration.categories}
+                  />
+                </Box>
+              </GridItem>
+            </>
+          )}
         </Grid>
       </Page>
     </>
@@ -186,30 +190,31 @@ export async function getServerSideProps({ params }) {
     .then((r) => parser(r))
     .then((r) => r.holdings);
 
-  // const concentrationRes = await fetch(
-  //   "https://polydao-api.vercel.app/dao/" +
-  //     params.dao +
-  //     "/governance/token/concentration"
-  // )
-  //   .then((r) => parser(r))
-  //   .then((r) => r.concentration);
-  // const concentration = {
-  //   data: concentrationRes.map(function (i) {
-  //     return i[1];
-  //   }),
+  const concentrationRes = await fetch(
+    "https://polydao-api.vercel.app/dao/" +
+      params.dao +
+      "/governance/token/concentration"
+  )
+    .then((r) => parser(r))
+    .then((r) => (!r.error ? r.concentration : false));
+  const concentration = concentrationRes
+    ? {
+        data: concentrationRes.map(function (i) {
+          return i[1];
+        }),
 
-  //   categories: concentrationRes.map(function (i) {
-  //     return i[0];
-  //   }),
-  // };
-
+        categories: concentrationRes.map(function (i) {
+          return i[0];
+        }),
+      }
+    : false;
   return {
     props: {
       votes,
       power,
       proposals,
       holdings,
-      // concentration,
+      concentration,
       dao: params.dao,
     },
   };

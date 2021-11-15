@@ -10,12 +10,21 @@ const Nav = (props) => {
   return (
     <Tabs defaultIndex={mapping[props.page]} align="center">
       <TabList>
-        <Tab>
-          <Link href="/">Compound</Link>
-        </Tab>
-        <Tab>
-          <Link href="/uniswap">Uniswap</Link>
-        </Tab>
+        <Link href="/">
+          <a>
+            <Tab>Compound</Tab>
+          </a>
+        </Link>
+        <Link href="/uniswap">
+          <a>
+            <Tab>Uniswap</Tab>
+          </a>
+        </Link>
+        {/* <Link href="/aave">
+          <a>
+            <Tab>Aave</Tab>
+          </a>
+        </Link> */}
       </TabList>
     </Tabs>
   );

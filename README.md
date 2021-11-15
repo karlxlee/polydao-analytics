@@ -22,6 +22,16 @@ Polydao Analytics relies on:
 - [wip] Number of members
 - [wip] Social media sentiment
 
+## Setup
+
+- Clone and deploy this repo, e.g. on Vercel
+
+### Adding new DAOs
+
+- This webapp pulls data from [polydao-api](https://github.com/karlxlee/polydao-api), which is an API wrapper pulling data from Covalent
+- Clone and deploy [polydao-api](https://github.com/karlxlee/polydao-api), providing your API key on Vercel as COVALENT_KEY environment variable
+- To add a DAO, append the necessary contracts as demonstrated in the dao.json file in [polydao-api](https://github.com/karlxlee/polydao-api)
+
 ## Getting Started
 
 First, run the development server:
