@@ -6,17 +6,12 @@ import Nav from "@/components/Nav";
 import {
   Stat,
   StatLabel,
-  StatNumber,
   StatHelpText,
-  StatArrow,
-  StatGroup,
   Grid,
   GridItem,
-  Text,
   Box,
 } from "@chakra-ui/react";
 
-import StatCard from "@/components/StatCard";
 import parser from "@/utils/parser";
 import dynamic from "next/dynamic";
 
@@ -30,9 +25,6 @@ const Bar = dynamic(() => import("@/components/Bar"), {
   ssr: false,
 });
 const DonutChart = dynamic(() => import("@/components/DonutChart"), {
-  ssr: false,
-});
-const Treemap = dynamic(() => import("@/components/Treemap"), {
   ssr: false,
 });
 
@@ -68,7 +60,6 @@ export default function Home(props) {
           </GridItem>
           <GridItem
             p={0}
-            // colStart={1}
             rowStart={2}
             colSpan={{ sm: 5, md: 5, lg: 2 }}
             h={"220px"}
@@ -211,6 +202,5 @@ export async function getServerSideProps() {
       return i[0];
     }),
   };
-  console.log(power);
   return { props: { votes, power, proposals, holdings, concentration } };
 }
